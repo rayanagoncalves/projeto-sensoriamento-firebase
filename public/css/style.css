@@ -1,0 +1,30 @@
+body{
+    background-color: #E0E0E0;
+}
+
+.content {
+    margin-top: 30px;
+}
+
+nav {
+    background-color: #071622;
+}
+
+.statistic {
+    font-size: 5.5em;
+    margin-top: 28px !important;
+}
+
+.card {
+    height: 220px;
+}
+
+.activator {
+    cursor: pointer;
+}
+
+.btn{
+    height: 30px;
+    font-size: 14px;
+    margin-top: 2px;
+}
