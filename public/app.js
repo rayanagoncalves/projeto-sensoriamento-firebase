@@ -16,17 +16,41 @@
   var tempRef = db.ref('sala/temperatura');
   var umidRef = db.ref('sala/umidade');
   var lumRef = db.ref('sala/luminosidade');
-  
-  //var presenceRef = db.ref('presence');
+  var presenceRef = db.ref('sala/presenca');
+  var distanciaRef = db.ref('sala/distancia')
+  var portaRef = db.ref('sala/porta');
+
   var lampRef = db.ref('sala/set_luminosidade');
   var setArRef = db.ref('sala/set_ar');
   var setMultimidiaRef = db.ref('sala/set_multimidia');
   var setPortaRef = db.ref('sala/set_porta');
 
-
-  tempRef.on('value', onNewData('currentTemp', 'C°'));
+  tempRef.on('value', onNewData('currentTemp', '°C'));
   umidRef.on('value', onNewData('currentUmid', '%'));
   lumRef.on('value', onNewData('currentLum', ''));
+  distanciaRef.on('value', onNewData('currentDistancia', ''));
+
+// Registrar função ao alterar valor de presença
+ presenceRef.on('value', function(snapshot){
+  var value = snapshot.val();
+  var el = document.getElementById('currentPresence')
+  if(value == 1){
+    el.classList.add('amber-text');
+  }else if(value == 0){
+    el.classList.remove('amber-text');
+  }
+ });
+
+ // Registrar função ao alterar valor da porta
+ portaRef.on('value', function(snapshot){
+  var value = snapshot.val();
+  var el = document.getElementById('currentPorta')
+  if(value == 1){
+    el.classList.add('amber-text');
+  }else if(value == 0){
+    el.classList.remove('amber-text');
+  }
+ });
 
   var currentLampValue = false;
   lampRef.on('value', function(snapshot){
@@ -43,7 +67,11 @@
   // Registrar função de click
   var btnLamp = document.getElementById('btn-lamp');
   btnLamp.addEventListener('click', function(evt){
-    lampRef.set(!currentLampValue);
+    if(currentLampValue == true) {
+      lampRef.set(0);
+    } else {
+      lampRef.set(1);
+    }
   });
 
   var currentAr = false;
@@ -60,7 +88,11 @@
 
   var btnAr = document.getElementById('btn-ar');
   btnAr.addEventListener('click', function(evt){
-    setArRef.set(!currentAr);
+    if(currentAr == true) {
+      setArRef.set(0);
+    } else {
+      setArRef.set(1);
+    }
   });
 
   var currentMultimidia = false;
@@ -77,28 +109,35 @@
 
   var btnMultimiidia = document.getElementById('btn-multimidia');
   btnMultimiidia.addEventListener('click', function(evt){
-    setMultimidiaRef.set(!currentMultimidia);
+    if(currentMultimidia == true) {
+      setMultimidiaRef.set(0);
+    } else {
+      setMultimidiaRef.set(1);
+    }
   });
 
-  var currentPorta = false;
+  var currentSetPorta = false;
   setPortaRef.on('value', function(snapshot){
     var value = snapshot.val();
-    var el = document.getElementById('currentPorta')
+    var el = document.getElementById('currentSetPorta')
     if(value){
       el.classList.add('amber-text');
     }else{
       el.classList.remove('amber-text');
     }
-    currentPorta = !!value;
+    currentSetPorta = !!value;
   });
 
   var btnPorta = document.getElementById('btn-porta');
   btnPorta.addEventListener('click', function(evt){
-    setPortaRef.set(!currentPorta);
+    if(currentSetPorta == true) {
+      setPortaRef.set(0);
+    } else {
+      setPortaRef.set(1);
+    }
   });
 
 })();
-
 
 // Retorna uma função que de acordo com as mudanças dos dados
 // Atualiza o valor atual do elemento, com a metrica passada (currentValueEl e metric)
