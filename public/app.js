@@ -151,6 +151,11 @@ function onNewData(currentValueEl, metric){
           currentValue = readings[key]
           data.push(currentValue);
         } 
+
+        if(currentValueEl == 'currentTemp') {
+          readings = readings.toFixed(2);
+        } 
+
         document.getElementById(currentValueEl).innerText = readings + ' ' + metric;
     }
   }
