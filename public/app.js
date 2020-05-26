@@ -153,7 +153,7 @@ function onNewData(currentValueEl, metric){
         } 
 
         if(currentValueEl == 'currentTemp') {
-          readings = readings.toFixed(2);
+          readings = readings.toFixed(1);
         } 
 
         document.getElementById(currentValueEl).innerText = readings + ' ' + metric;
