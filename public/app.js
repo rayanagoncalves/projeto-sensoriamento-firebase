@@ -139,7 +139,7 @@
 
 })();
 
-// Retorna uma função que de acordo com as mudanças dos dados
+// Retorna uma função de acordo com as mudanças dos dados
 // Atualiza o valor atual do elemento, com a metrica passada (currentValueEl e metric)
 function onNewData(currentValueEl, metric){
   return function(snapshot){
